@@ -14,6 +14,8 @@ const List = () => {
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
 
+  const {data, loading, error, refetch} = useFetch("https://localhost:7137/api/Hotel/fiters-hotel");
+
   return (
     <div>
       <Navbar />
