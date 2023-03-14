@@ -3,7 +3,7 @@ import "./featuredProperties.css";
 
 const FeaturedProperties = () => {
   const {data, loading, error} = useFetch("https://localhost:7137/api/Hotel/all-hotels");
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="fp">
