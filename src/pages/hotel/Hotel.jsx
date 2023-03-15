@@ -12,8 +12,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import useHotel from "../../hooks/useHotel";
 import useFetch from "../../hooks/useFetch";
-import useHotel from "../../hooks/getHotel";
 
 const Hotel = () => {
   const location = useLocation();
@@ -22,8 +22,8 @@ const Hotel = () => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
 
-  const {data, loading, error} = useHotel('https://localhost:7137/api/Hotel/get-hotel-by-id?id=9aa6cc82-2816-4e39-6ee4-08db22d75dd7');
-  console.log(loading);
+  const {data, loading, error} = useFetch(`https://localhost:7137/api/Hotel/get-hotel-by-id/{id}`);
+  console.log(data);
 
   const photos = [
     {
@@ -69,7 +69,8 @@ const Hotel = () => {
       <Header type="list" />
       {loading ? (
         "loading"
-      ) : (
+      ) : 
+      (
       <div className="hotelContainer">
         {open && (
           <div className="slider">
