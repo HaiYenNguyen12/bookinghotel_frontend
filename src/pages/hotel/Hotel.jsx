@@ -11,10 +11,19 @@ import {
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
+import useHotel from "../../hooks/getHotel";
 
 const Hotel = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  console.log(id);
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
+
+  const {data, loading, error} = useHotel('https://localhost:7137/api/Hotel/get-hotel-by-id?id=9aa6cc82-2816-4e39-6ee4-08db22d75dd7');
+  console.log(loading);
 
   const photos = [
     {
@@ -58,6 +67,9 @@ const Hotel = () => {
     <div>
       <Navbar />
       <Header type="list" />
+      {loading ? (
+        "loading"
+      ) : (
       <div className="hotelContainer">
         {open && (
           <div className="slider">
@@ -83,10 +95,10 @@ const Hotel = () => {
         )}
         <div className="hotelWrapper">
           <button className="bookNow">Reserve or Book Now!</button>
-          <h1 className="hotelTitle">Tower Street Apartments</h1>
+          <h1 className="hotelTitle">{data.hotelName}</h1>
           <div className="hotelAddress">
             <FontAwesomeIcon icon={faLocationDot} />
-            <span>Elton St 125 New york</span>
+            <span>{data?.address?.streetNumber} - {data.address.district} - {data.address.city}</span>
           </div>
           <span className="hotelDistance">
             Excellent location – 500m from center
@@ -139,6 +151,7 @@ const Hotel = () => {
         <MailList />
         <Footer />
       </div>
+      )}
     </div>
   );
 };
